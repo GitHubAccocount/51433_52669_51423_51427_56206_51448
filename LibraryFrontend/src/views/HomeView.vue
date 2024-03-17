@@ -1,5 +1,2 @@
+<template>Hello Home</template>
 <script setup></script>
-
-<template>
-  <main></main>
-</template>
