@@ -9,7 +9,6 @@ class UserSerializer(serializers.ModelSerializer):
 
   def validate(self, attrs):
     password = attrs.get('password')
-    password2 = attrs.get('password2')
 
     try: 
     # django's validation rules for password
