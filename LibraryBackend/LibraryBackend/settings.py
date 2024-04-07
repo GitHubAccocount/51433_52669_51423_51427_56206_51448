@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# define new user
 AUTH_USER_MODEL = 'account.User'
 
 SIMPLE_JWT = {
