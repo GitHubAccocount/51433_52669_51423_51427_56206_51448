@@ -9,12 +9,17 @@ class UserSerializer(serializers.ModelSerializer):
 
   def validate(self, attrs):
     password = attrs.get('password')
+    password2 = attrs.get('password2')
 
     try: 
     # django's validation rules for password
       validate_password(password)
     except ValueError as err:
       raise serializers.ValidationError(" ".join(err.messages))
+
+    # password and password confirmation must be the same
+    if password != password2:
+      raise serializers.ValidationError("Passwords do not match")
 
     email = attrs.get('email')
 
@@ -39,4 +44,4 @@ class UserSerializer(serializers.ModelSerializer):
   class Meta:
     # Serializer configuration options
     model = User
-    fields = ('email', 'password')
+    fields = ('email', 'password', 'password2')

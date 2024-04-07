@@ -1,7 +1,4 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from .serializer import UserSerializer
 
 @api_view(['POST'])  # Define this function as a view that only accepts POST requests
 @authentication_classes([])  # No authentication required for this view
@@ -30,3 +27,4 @@ def register(request):
         return JsonResponse({'status': 'success'}, status=201)  # Return success response
     else:  # If data is invalid
         return JsonResponse(serializer.errors, status=400)  # Return validation errors as JSON response
+
