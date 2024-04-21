@@ -1,7 +1,14 @@
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from django.shortcuts import render
 from django.http import JsonResponse
-from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from .serializer import UserSerializer
+
+@api_view(['GET'])
+def user_data(request):
+    return JsonResponse({
+        'id': request.user.id,
+        'email': request.user.email
+    })
 
 @api_view(['POST'])  # Define this function as a view that only accepts POST requests
 @authentication_classes([])  # No authentication required for this view

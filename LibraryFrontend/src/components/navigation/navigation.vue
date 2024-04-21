@@ -21,19 +21,27 @@
             >
           </li>
 
-          <li>
+          <li v-if="!isAuthenticated">
             <router-link
               to="/login"
               class="block py-2 px-3 hover:text-teal-300 text-white"
               >Zaloguj się</router-link
             >
           </li>
-          <li>
+          <li v-if="!isAuthenticated">
             <router-link
               to="/register"
               class="block py-2 px-3 hover:text-teal-300 text-white"
               >Zarejestruj się</router-link
             >
+          </li>
+          <li v-if="isAuthenticated">
+            <button
+              @click="logout"
+              class="block py-2 px-3 hover:text-teal-300 text-white"
+            >
+              Wyloguj się
+            </button>
           </li>
         </ul>
       </div>
@@ -41,4 +49,14 @@
   </nav>
 </template>
 
-<script setup></script>
+<script setup>
+import { useUserStore } from "@/stores/user";
+import { computed } from "vue";
+
+const userStore = useUserStore();
+const isAuthenticated = computed(() => userStore.user.isAuthenticated);
+
+const logout = () => {
+  userStore.LOGOUT();
+};
+</script>

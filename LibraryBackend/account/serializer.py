@@ -30,9 +30,8 @@ class UserSerializer(serializers.ModelSerializer):
     # remove password from validated_data and store it password variable
     password = validated_data.pop('password')
     # make_password is a django function which hashes the password
-    hashed_password = make_password(password)
     user = User.objects.create_user(
-      email=validated_data['email'], password=hashed_password
+      email=validated_data['email'], password=password
     )
     return user
   
