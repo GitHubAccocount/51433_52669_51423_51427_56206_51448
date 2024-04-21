@@ -14,7 +14,7 @@ export const useUserStore = defineStore("user", () => {
 
   const router = useRouter();
   const isSubmitting = ref(false);
-  const message = ref();
+  const errors = ref([]);
 
   // const REGISTER = async (form) => {
   //   const baseUrl = import.meta.env.VITE_APP_API_URL;
@@ -41,10 +41,12 @@ export const useUserStore = defineStore("user", () => {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + response.data.access;
       setToken(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
       getUserData();
+    } catch (error) {
+      if (error.response.data.detail) {
+        errors.value.push(error.response.data.detail);
+      }
+    } finally {
     }
   };
 
@@ -91,9 +93,8 @@ export const useUserStore = defineStore("user", () => {
   };
 
   return {
+    errors,
     isSubmitting,
-    // message,
-    // isAuthenticated,
     user,
     // REGISTER,
     LOGIN,
