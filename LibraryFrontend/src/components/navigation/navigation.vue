@@ -15,6 +15,13 @@
         >
           <li>
             <router-link
+              to="/book"
+              class="block py-2 px-3 hover:text-teal-300 text-white"
+              >Ksiazka</router-link
+            >
+          </li>
+          <li>
+            <router-link
               to="/search"
               class="block py-2 px-3 hover:text-teal-300 text-white"
               >Wyszukiwarka</router-link
