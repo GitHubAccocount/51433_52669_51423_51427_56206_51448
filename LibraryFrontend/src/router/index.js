@@ -31,6 +31,16 @@ const router = createRouter({
       name: "search",
       component: () => import("../views/SearchView.vue"),
     },
+    {
+      path: "/book",
+      name: "book",
+      component: () => import("../views/BookView.vue"),
+    },
+    {
+      path: "/bookEdit",
+      name: "bookEdit",
+      component: () => import("../views/BookEditView.vue"),
+    },
   ],
 });
 
@@ -42,7 +52,7 @@ router.beforeEach((to, from) => {
     !isAuthenticated.value &&
     // ❗️ Avoid an infinite redirect
     to.name !== "login" &&
-    to.name !== "register"
+    to.name !== "register" 
   ) {
     // redirect the user to the login page
     return { name: "login" };
