@@ -26,7 +26,7 @@
           <p>{{ book.author }}</p>
           <p>Rok wydania: {{ book.year_published }}</p>
           <p>{{ book.description }}</p>
-          <p>Dostępność: 2/2</p>
+          <p>Dostępność: {{ book.available }}/{{ book.total_stock }}</p>
         </div>
       </div>
     </div>

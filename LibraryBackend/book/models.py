@@ -11,6 +11,8 @@ class Book(models.Model):
   year_published = models.PositiveIntegerField(blank=True, null=True)
   category = models.CharField(max_length=100, blank=True)
   description = models.TextField(blank=True)
+  total_stock = models.PositiveIntegerField(default=0)
+  available = models.PositiveIntegerField(default=0) 
 
   def save(self, *args, **kwargs):
     # Delete old image when a new one is uploaded

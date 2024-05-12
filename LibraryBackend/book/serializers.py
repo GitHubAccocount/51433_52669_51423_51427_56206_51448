@@ -6,7 +6,7 @@ class BookSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Book
-    fields = ['id', 'title', 'author', 'image', 'image_url', 'year_published', 'category', 'description']
+    fields = '__all__'
 
   def get_image_url(self, obj):
     if obj.image:
