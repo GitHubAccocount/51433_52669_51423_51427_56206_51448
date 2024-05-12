@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-10 grid-rows-10 gap-4 h-screen gap-10">
+  <div class="grid grid-cols-10 grid-rows-10 gap-4 h-screen">
     <div class="col-span-10">
       <search-input></search-input>
     </div>
@@ -10,7 +10,7 @@
     <div class="col-span-8 row-span-9 col-start-3 row-start-2">
       <p class="text-center font-bold">Wynik</p>
       <div
-        v-for="book in bookStore.books"
+        v-for="book in filteredBooks"
         :key="book.id"
         class="grid grid-cols-10 gap-4 border-b border-b-slate-400 mb-5"
       >
@@ -37,11 +37,14 @@
 import searchInput from "./searchInput.vue";
 import searchCategory from "./searchCategory.vue";
 import { useBookStore } from "@/stores/book";
-import { onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const bookStore = useBookStore();
 
 onMounted(() => {
   bookStore.GET_BOOKS();
 });
+
+const filteredBooks = computed(() => bookStore.FILTERED_BOOKS());
+console.log("FILTERED BOOKS: ", filteredBooks.value);
 </script>

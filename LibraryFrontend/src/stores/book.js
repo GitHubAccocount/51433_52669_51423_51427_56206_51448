@@ -1,6 +1,6 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
 export const useBookStore = defineStore("book", () => {
@@ -17,8 +17,21 @@ export const useBookStore = defineStore("book", () => {
     }
   };
 
+  const selectedCategories = ref([]);
+
+  const FILTERED_BOOKS = () => {
+    if (selectedCategories.value.length === 0) {
+      return books.value;
+    }
+    return books.value.filter((book) =>
+      selectedCategories.value.includes(book.category)
+    );
+  };
+
   return {
     books,
+    selectedCategories,
     GET_BOOKS,
+    FILTERED_BOOKS,
   };
 });
