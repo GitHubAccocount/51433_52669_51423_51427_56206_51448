@@ -5,6 +5,7 @@
     <p>ISBN: {{ book.isbn }}</p>
     <p>Published Year: {{ book.publishedYear }}</p>
     <p>Description: {{ book.description }}</p>
+    <p>Genre: {{ book.genre }}</p>
     <div class="button-container">
       <router-link to="/bookEdit" class="edit-button">Edytuj</router-link>
       <button class="delete-button" @click="deleteBook">Usuń</button>
@@ -21,7 +22,8 @@ export default {
         author: "John Doe",
         isbn: "1234567890",
         publishedYear: 2020,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+        genre: "book genre"
       }
     };
   },
