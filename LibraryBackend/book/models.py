@@ -31,7 +31,7 @@ class Book(models.Model):
 
 class Borrower(models.Model):
     name = models.CharField(max_length=100)
-    email = models.EmailField(unique=true) #Ensures email uniqueness
+    email = models.EmailField(unique=True) #Ensures email uniqueness
     # Temporary excluded from code - phone_number = models.CharField(max_length=20)
 
     def __str__(self):
