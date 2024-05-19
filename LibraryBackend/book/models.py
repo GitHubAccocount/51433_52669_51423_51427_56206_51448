@@ -46,3 +46,28 @@ class Loan(models.Model):
 
     def __str__(self):
         return f'Loan of {self.book.title} to {self.borrower.name}'
+    
+    def is_reserved(self):
+        return Loan.objects.filter(book=self.book, reservation_date__gte=timezone.now() - timedelta(hours=12)).exists()
+
+    def reserve(self):
+        if self.book.available > 0 and not self.is_reserved():
+            self.reservation_date = timezone.now()
+            self.reservation_expires = self.reservation_date + timedelta(hours=12)
+            self.status = 'reserved'
+            self.book.available -= 1
+            self.save()
+            self.book.save()
+        else:
+            raise Exception("Book is not available for reservation or is already reserved")
+
+    def cancel_reservation(self):
+        if self.status == 'reserved':
+            self.status = 'active'
+            self.reservation_date = None
+            self.reservation_expires = None
+            self.book.available += 1
+            self.save()
+            self.book.save()
+        else:
+            raise Exception("Loan is not reserved")
