@@ -64,7 +64,7 @@
           { name: 'Biografia' },
           { name: 'Kryminał' }
         ],
-        bookCover: 'https://via.placeholder.com/150' // Placeholder for book cover
+        bookCover: 'https://via.placeholder.com/500%20x%20800' // Placeholder for book cover
       };
     },
     methods: {

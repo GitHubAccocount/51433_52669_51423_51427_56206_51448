@@ -10,19 +10,19 @@
         <form @submit.prevent="saveChanges">
           <div class="form-group">
             <label for="title">Tytuł:</label>
-            <input type="text" id="title" v-model="editedBook.title" required>
+            <input type="text" id="title" v-model="editedBook.title" placeholder="Wprowadź tytuł książki" required>
           </div>
           <div class="form-group">
             <label for="author">Autor:</label>
-            <input type="text" id="author" v-model="editedBook.author" required>
+            <input type="text" id="author" v-model="editedBook.author" placeholder="Wprowadź autora książki" required>
           </div>
           <div class="form-group">
             <label for="isbn">ISBN:</label>
-            <input type="text" id="isbn" v-model="editedBook.isbn" required>
+            <input type="text" id="isbn" v-model="editedBook.isbn" placeholder="Wprowadź ISBN książki" required>
           </div>
           <div class="form-group">
             <label for="publishedYear">Rok publikacji:</label>
-            <input type="number" id="publishedYear" v-model="editedBook.publishedYear" required>
+            <input type="number" id="publishedYear" v-model="editedBook.publishedYear" placeholder="Wprowadź rok publikacji" required>
           </div>
           <div class="form-group">
             <label for="genres">Gatunek:</label>
@@ -30,7 +30,7 @@
           </div>
           <div class="form-group">
             <label for="description">Opis:</label>
-            <textarea id="description" v-model="editedBook.description" required></textarea>
+            <textarea id="description" v-model="editedBook.description" placeholder="Wprowadź opis książki" required></textarea>
           </div>
           <button type="submit">Zapisz zmiany</button>
         </form>
@@ -64,7 +64,7 @@
           { name: 'Biografia' },
           { name: 'Kryminał' }
         ],
-        bookCover: 'https://via.placeholder.com/150' // Placeholder for book cover
+        bookCover: 'https://via.placeholder.com/500%20x%20800' // Placeholder for book cover
       };
     },
     mounted() {
