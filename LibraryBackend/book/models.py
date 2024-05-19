@@ -28,3 +28,21 @@ class Book(models.Model):
         pass
 
     super(Book, self).save(*args, **kwargs)
+
+class Borrower(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=true) #Ensures email uniqueness
+    # Temporary excluded from code - phone_number = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+class Loan(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    borrower = models.ForeignKey(Borrower, on_delete=models.CASCADE)
+    loan_date = models.DateField(auto_now_add=True)  # Automatically set loan date
+    return_date = models.DateField(null=True, blank=True)  # Allow null return dates for active loans
+    status = models.CharField(max_length=20, choices=[('active', 'Active'), ('returned', 'Returned'), ('overdue', 'Overdue')], default='active')
+
+    def __str__(self):
+        return f'Loan of {self.book.title} to {self.borrower.name}'
