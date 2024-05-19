@@ -61,7 +61,8 @@ router.beforeEach((to, from) => {
     to.name !== "search" &&
     to.name !== "book" &&
     to.name !== "bookEdit" &&
-    to.name !== "bookAdd"
+    to.name !== "bookAdd" &&
+    to.name !== "home"
   ) {
     // redirect the user to the login page
     return { name: "login" };
