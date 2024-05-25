@@ -41,6 +41,11 @@ const router = createRouter({
       name: "bookEdit",
       component: () => import("../views/BookEditView.vue"),
     },
+    {
+      path: "/bookAdd",
+      name: "bookAdd",
+      component: () => import("../views/BookAddView.vue"),
+    },
   ],
 });
 
@@ -52,7 +57,12 @@ router.beforeEach((to, from) => {
     !isAuthenticated.value &&
     // ❗️ Avoid an infinite redirect
     to.name !== "login" &&
-    to.name !== "register" 
+    to.name !== "register" &&
+    to.name !== "search" &&
+    to.name !== "book" &&
+    to.name !== "bookEdit" &&
+    to.name !== "bookAdd" &&
+    to.name !== "home"
   ) {
     // redirect the user to the login page
     return { name: "login" };
