@@ -46,6 +46,31 @@ const router = createRouter({
       name: "bookAdd",
       component: () => import("../views/BookAddView.vue"),
     },
+    {
+      path: "/user",
+      name: "user",
+      component: () => import("../views/UserView.vue"),
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: () => import("../views/AdminView.vue"),
+    },
+    {
+      path: "/adminBooks",
+      name: "adminBooks",
+      component: () => import("../views/AdminBooksView.vue"),
+    },
+    {
+      path: "/adminUsers",
+      name: "adminUsers",
+      component: () => import("../views/AdminUsersView.vue"),
+    },
+    {
+      path: "/reservationList",
+      name: "reservationList",
+      component: () => import("../views/ReservationListView.vue"),
+    },
   ],
 });
 
@@ -62,7 +87,12 @@ router.beforeEach((to, from) => {
     to.name !== "book" &&
     to.name !== "bookEdit" &&
     to.name !== "bookAdd" &&
-    to.name !== "home"
+    to.name !== "home" &&
+    to.name !== "user" &&
+    to.name !== "admin" &&
+    to.name !== "adminBooks" &&
+    to.name !== "adminUsers" &&
+    to.name !== "reservationList"
   ) {
     // redirect the user to the login page
     return { name: "login" };
