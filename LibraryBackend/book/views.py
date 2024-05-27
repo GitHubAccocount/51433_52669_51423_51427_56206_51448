@@ -6,23 +6,8 @@ from rest_framework.request import Request
 from.models import Book
 from.serializers import BookSerializer
 
-@api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
+@api_view(['GET']) 
 def book_list(request: Request):
-    if request.method == 'GET':
-        books = Book.objects.all()
-        serializer = BookSerializer(books, many=True, context={'request': request})
-        return Response({'books': serializer.data})
-    elif request.method == 'POST':
-        data = request.data
-        if 'book_id' not in data:
-            return Response({'error': 'Book ID is required'}, status=400)
-        try:
-            book_id = data['book_id']
-            book = Book.objects.get(id=book_id)
-            loan = Loan(book=book, borrower=request.user)
-            loan.reserve()
-            serializer = LoanSerializer(loan, context={'request': request})
-            return Response(serializer.data)
-        except Book.DoesNotExist:
-            return Response({'error': 'Book not found'}, status=404)
+    books = Book.objects.all()
+    serializer = BookSerializer(books, many=True, context={'request': request})
+    return Response({'books': serializer.data})
