@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 
-from.models import Book, Loan
-from.serializers import BookSerializer, LoanSerializer
+from.models import Book
+from.serializers import BookSerializer
 
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
@@ -26,10 +26,3 @@ def book_list(request: Request):
             return Response(serializer.data)
         except Book.DoesNotExist:
             return Response({'error': 'Book not found'}, status=404)
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def loan_list(request: Request):
-    loans = Loan.objects.all()
-    serializer = LoanSerializer(loans, many=True, context={'request': request})
-    return Response({'loans': serializer.data})
