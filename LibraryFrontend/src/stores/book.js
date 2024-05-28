@@ -9,8 +9,8 @@ export const useBookStore = defineStore("book", () => {
   const GET_BOOKS = async () => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/books`);
-      books.value = response.data.books;
-      console.log(books.value);
+      books.value = response.data;
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -28,10 +28,36 @@ export const useBookStore = defineStore("book", () => {
     );
   };
 
+  const book = ref();
+  const FETCH_BOOK_BY_ID = async (bookId) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/api/books/${bookId}`
+      );
+      book.value = response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const success_message = ref();
+  const BORROW_BOOK = async (data) => {
+    try {
+      await axios.post(`http://127.0.0.1:8000/api/borrowings/`, data);
+      success_message.value = "Wypożyczono";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
+    book,
     books,
     selectedCategories,
+    success_message,
+    BORROW_BOOK,
     GET_BOOKS,
+    FETCH_BOOK_BY_ID,
     FILTERED_BOOKS,
   };
 });

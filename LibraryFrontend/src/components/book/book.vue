@@ -1,92 +1,48 @@
 <template>
-  <div class="book-details-container">
+  <div v-if="book" class="book-details-container">
     <div class="book-cover">
-      <img :src="bookCover" alt="Okładka książki" class="cover-placeholder" />
+      <img :src="book.image" :alt="book.title" />
     </div>
     <div class="book-details">
       <div class="details-container">
-        <h1>{{ book.title }}</h1>
-        <p><strong>Autor:</strong> {{ book.author }}</p>
-        <p><strong>ISBN:</strong> {{ book.isbn }}</p>
-        <p><strong>Rok publikacji:</strong> {{ book.publishedYear }}</p>
-        <p><strong>Gatunek:</strong> {{ book.genre }}</p>
-        <p><strong>Opis:</strong> {{ book.description }}</p>
-        <p><strong>Wydawca:</strong> {{ book.publisher }}</p>
-        <p><strong>Liczba stron:</strong> {{ book.pages }}</p>
-        <p><strong>Język:</strong> {{ book.language }}</p>
-        <div class="rating-reviews">
-          <h2>Oceny i recenzje</h2>
-          <p><strong>Ocena:</strong> {{ book.rating }} / 5</p>
-          <ul>
-            <li v-for="review in book.reviews" :key="review.id">
-              <p><strong>{{ review.user }}</strong>: {{ review.comment }}</p>
-              <p>Ocena: {{ review.rating }} / 5</p>
-            </li>
-          </ul>
-        </div>
+        <h2>{{ book.title }}</h2>
+        <p>By {{ book.author }}</p>
+        <p>Year Published: {{ book.year_published }}</p>
+        <p>{{ book.description }}</p>
+        <p>Availability: {{ book.available }} / {{ book.total_stock }}</p>
         <div class="button-container">
           <router-link to="/bookEdit" class="edit-button">Edytuj</router-link>
-          <button class="delete-button" @click="deleteBook">Usuń</button>
-          <button class="favorite-button" @click="addToFavorites">Dodaj do ulubionych</button>
-          <button class="loan-button" @click="loanBook">Wypożycz</button>
+          <button class="loan-button" @click="borrow_book()">Wypożycz</button>
         </div>
-        <div class="related-books">
-          <h2>Powiązane książki</h2>
-          <ul>
-            <li v-for="related in relatedBooks" :key="related.id">
-              <router-link :to="'/book/' + related.id">{{ related.title }}</router-link>
-            </li>
-          </ul>
+        <div
+          class="p-3 bg-green-300 w-fit mt-4"
+          v-if="bookStore.success_message"
+        >
+          <p class="text-green-800">{{ bookStore.success_message }}</p>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      book: {
-        title: "Example Book",
-        author: "John Doe",
-        isbn: "1234567890",
-        publishedYear: 2020,
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-        genre: "Fikcja",
-        publisher: "Example Publisher",
-        pages: 350,
-        language: "Polski",
-        rating: 4.5,
-        reviews: [
-          { id: 1, user: "Alice", comment: "Świetna książka!", rating: 5 },
-          { id: 2, user: "Bob", comment: "Bardzo dobra, ale trochę za długa.", rating: 4 },
-        ],
-      },
-      bookCover: 'https://via.placeholder.com/500x800', // Placeholder for book cover
-      relatedBooks: [
-        { id: 2, title: "Related Book 1" },
-        { id: 3, title: "Related Book 2" },
-      ],
-    };
-  },
-  methods: {
-    deleteBook() {
-      if (confirm("Czy na pewno chcesz usunąć tę książkę?")) {
-        // Kod usuwający książkę
-        // np. this.$http.delete(`/books/${this.book.id}`)
-        // this.$router.push('/books')
-      }
-    },
-    addToFavorites() {
-      // Kod dodający książkę do ulubionych -- pewnie do usunięcia
-      alert("Dodano do ulubionych!");
-    },
-    loanBook() {
-      // Kod wypożyczający książkę
-      alert("Wypożyczono książkę!");
-    }
-  }
+<script setup>
+import { useRoute } from "vue-router";
+import { useBookStore } from "@/stores/book";
+import { computed, onMounted } from "vue";
+import { useUserStore } from "@/stores/user";
+
+const route = useRoute();
+const bookStore = useBookStore();
+const book = computed(() => bookStore.book);
+onMounted(async () => {
+  await bookStore.FETCH_BOOK_BY_ID(route.params.id);
+});
+
+const userStore = useUserStore();
+const userEmail = userStore.user.email;
+
+const borrow_book = () => {
+  bookStore.BORROW_BOOK({ user_email: userEmail, book_id: book.value.id });
 };
 </script>
 

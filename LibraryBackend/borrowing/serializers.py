@@ -7,7 +7,7 @@ class BorrowingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Borrowing
-        fields = ['user_email', 'book_id', 'borrowed_at', 'return_date']  # Include return_date
+        fields = '__all__'  # Include return_date
 
     def validate(self, data):
         # Check if user exists by email

@@ -13,6 +13,7 @@
         v-for="book in filteredBooks"
         :key="book.id"
         class="grid grid-cols-10 gap-4 border-b border-b-slate-400 mb-5"
+        @click="goToBookDetails(book.id)"
       >
         <div class="col-span-2">
           <img
@@ -38,6 +39,7 @@ import searchInput from "./searchInput.vue";
 import searchCategory from "./searchCategory.vue";
 import { useBookStore } from "@/stores/book";
 import { computed, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const bookStore = useBookStore();
 
@@ -47,4 +49,9 @@ onMounted(() => {
 
 const filteredBooks = computed(() => bookStore.FILTERED_BOOKS());
 console.log("FILTERED BOOKS: ", filteredBooks.value);
+
+const router = useRouter();
+const goToBookDetails = (bookId) => {
+  router.push({ name: "book", params: { id: bookId } });
+};
 </script>

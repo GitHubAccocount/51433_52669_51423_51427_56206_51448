@@ -32,7 +32,7 @@ const router = createRouter({
       component: () => import("../views/SearchView.vue"),
     },
     {
-      path: "/book",
+      path: "/book/:id",
       name: "book",
       component: () => import("../views/BookView.vue"),
     },
@@ -77,23 +77,7 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   const userStore = useUserStore();
   const isAuthenticated = computed(() => userStore.user.isAuthenticated);
-  if (
-    // make sure the user is authenticated
-    !isAuthenticated.value &&
-    // ❗️ Avoid an infinite redirect
-    to.name !== "login" &&
-    to.name !== "register" &&
-    to.name !== "search" &&
-    to.name !== "book" &&
-    to.name !== "bookEdit" &&
-    to.name !== "bookAdd" &&
-    to.name !== "home" &&
-    to.name !== "user" &&
-    to.name !== "admin" &&
-    to.name !== "adminBooks" &&
-    to.name !== "adminUsers" &&
-    to.name !== "reservationList"
-  ) {
+  if (!isAuthenticated.value && to.name !== "login" && to.name !== "register") {
     // redirect the user to the login page
     return { name: "login" };
   }
