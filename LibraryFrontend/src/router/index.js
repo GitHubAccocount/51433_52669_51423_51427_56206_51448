@@ -92,7 +92,7 @@ router.beforeEach((to, from) => {
   }
   if (
     isAuthenticated.value &&
-    isSuperUser.value === false &&
+    isSuperUser.value === "false" &&
     (to.name == "admin" || to.name == "register")
   ) {
     return { name: "home" };

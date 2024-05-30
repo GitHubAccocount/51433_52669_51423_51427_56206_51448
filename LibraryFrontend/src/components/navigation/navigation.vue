@@ -27,7 +27,7 @@
               >Moje wypożyczenia</router-link
             >
           </li>
-          <li v-if="isSuperUser === true">
+          <li v-if="isSuperUser === 'true'">
             <router-link
               to="/admin"
               class="block py-2 px-3 hover:text-teal-300 text-white"
