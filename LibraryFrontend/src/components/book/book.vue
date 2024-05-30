@@ -10,15 +10,41 @@
         <p>Year Published: {{ book.year_published }}</p>
         <p>{{ book.description }}</p>
         <p>Availability: {{ book.available }} / {{ book.total_stock }}</p>
-        <div class="button-container">
-          <router-link to="/bookEdit" class="edit-button">Edytuj</router-link>
-          <button class="loan-button" @click="borrow_book()">Wypożycz</button>
-        </div>
-        <div
-          class="p-3 bg-green-300 w-fit mt-4"
-          v-if="bookStore.success_message"
-        >
-          <p class="text-green-800">{{ bookStore.success_message }}</p>
+        <div v-if="user.is_superuser === true">
+          <div class="button-container">
+            <button class="edit-button" @click="showUsersList">
+              Wybierz wypożyczającego użytkownika:
+            </button>
+          </div>
+          <div v-if="showUsers" class="mt-3 bg-slate-100 p-3">
+            <select v-model="selectedUserEmail">
+              <option value="" selected disabled>Wybierz użytkownika</option>
+              <option
+                v-for="user in users"
+                :key="user.email"
+                :value="user.email"
+              >
+                {{ user.email }}
+              </option>
+            </select>
+            <button
+              class="loan-button ml-5"
+              @click="
+                borrow_book({
+                  user_email: selectedUserEmail,
+                  book_id: book.id,
+                })
+              "
+            >
+              Wypożycz dla tego użytkownika
+            </button>
+          </div>
+          <div
+            class="p-3 bg-green-300 w-fit mt-4"
+            v-if="borrowingStore.success_message"
+          >
+            <p class="text-green-800">{{ borrowingStore.success_message }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -28,22 +54,39 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { useBookStore } from "@/stores/book";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useUserStore } from "@/stores/user";
+import { useBorrowingsStore } from "@/stores/borrowings";
 
 const route = useRoute();
 const bookStore = useBookStore();
 const book = computed(() => bookStore.book);
-onMounted(async () => {
-  await bookStore.FETCH_BOOK_BY_ID(route.params.id);
-});
 
 const userStore = useUserStore();
 const userEmail = userStore.user.email;
+const user = computed(() => userStore.user);
+const users = computed(() => userStore.users);
 
-const borrow_book = () => {
-  bookStore.BORROW_BOOK({ user_email: userEmail, book_id: book.value.id });
+onMounted(async () => {
+  await bookStore.FETCH_BOOK_BY_ID(route.params.id);
+  await userStore.GET_USERS();
+});
+
+const borrowingStore = useBorrowingsStore();
+
+const selectedUserEmail = ref("");
+const borrow_book = async (data) => {
+  borrowingStore.BORROW_BOOK(data);
 };
+
+const showUsers = ref(false);
+const showUsersList = () => {
+  showUsers.value = !showUsers.value;
+};
+
+onUnmounted(() => {
+  borrowingStore.success_message = "";
+});
 </script>
 
 <style scoped>

@@ -4,13 +4,15 @@ from django.http import JsonResponse
 from.serializer import UserSerializer
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response
+from django.contrib.auth import get_user_model
 from rest_framework import status
 
 @api_view(['GET'])
 def user_data(request):
     return JsonResponse({
         'id': request.user.id,
-        'email': request.user.email
+        'email': request.user.email,
+        'is_superuser': request.user.is_superuser
     })
 
 @api_view(['POST'])  # Define this function as a view that only accepts POST requests
@@ -40,6 +42,15 @@ def register(request):
         return JsonResponse({'status': 'success'}, status=201)  # Return success response
     else:  # If data is invalid
         return JsonResponse(serializer.errors, status=400)  # Return validation errors as JSON response
+    
+@api_view(['GET'])
+def user_list(request):
+    """
+    Returns a list of all users.
+    """
+    queryset = get_user_model().objects.all()  # Get all users
+    serializer = UserSerializer(queryset, many=True)  # Serialize the data
+    return Response(serializer.data)  # Return the serialized data as JSON
 
 @api_view(['PATCH'])  # Define this function as a view that only accepts PATCH requests
 @authentication_classes([])  # No authentication required for this view (assuming you'll add auth later)

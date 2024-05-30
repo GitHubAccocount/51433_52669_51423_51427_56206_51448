@@ -8,6 +8,7 @@ export const useUserStore = defineStore("user", () => {
     isAuthenticated: !!localStorage.getItem("user.access"),
     id: localStorage.getItem("user.id") ?? null,
     email: localStorage.getItem("user.email") ?? null,
+    is_superuser: localStorage.getItem("user.is_superuser") ?? null,
     access: localStorage.getItem("user.access") ?? null,
     refresh: localStorage.getItem("user.refresh") ?? null,
   });
@@ -63,6 +64,16 @@ export const useUserStore = defineStore("user", () => {
     }
   };
 
+  const users = ref();
+  const GET_USERS = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/user-list`);
+      users.value = response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const setToken = (data) => {
     localStorage.setItem("user.access", data.access);
     localStorage.setItem("user.refresh", data.refresh);
@@ -74,10 +85,12 @@ export const useUserStore = defineStore("user", () => {
   const setUser = (data) => {
     localStorage.setItem("user.email", data.email);
     localStorage.setItem("user.id", data.id);
+    localStorage.setItem("user.is_superuser", data.is_superuser);
 
     user.value.isAuthenticated = true;
     user.value.id = data.id;
     user.value.email = data.email;
+    user.value.is_superuser = data.is_superuser;
   };
 
   const LOGOUT = () => {
@@ -86,6 +99,7 @@ export const useUserStore = defineStore("user", () => {
     localStorage.removeItem("user.refresh");
     localStorage.removeItem("user.email");
     localStorage.removeItem("user.id");
+    localStorage.removeItem("user.is_superuser");
     user.value.id = "";
     user.value.email = "";
     user.value.roles = "";
@@ -96,7 +110,9 @@ export const useUserStore = defineStore("user", () => {
     errors,
     isSubmitting,
     user,
+    users,
     // REGISTER,
+    GET_USERS,
     LOGIN,
     LOGOUT,
   };

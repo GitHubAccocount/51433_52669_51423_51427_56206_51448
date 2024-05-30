@@ -22,16 +22,16 @@
           </li>
           <li>
             <router-link
-              to="/admin"
+              to="/my-borrowings"
               class="block py-2 px-3 hover:text-teal-300 text-white"
-              >Administrator</router-link
+              >Moje wypożyczenia</router-link
             >
           </li>
-          <li>
+          <li v-if="isSuperUser === true">
             <router-link
-              to="/book"
+              to="/admin"
               class="block py-2 px-3 hover:text-teal-300 text-white"
-              >Ksiazka</router-link
+              >Wypożyczenia</router-link
             >
           </li>
           <li>
@@ -83,6 +83,7 @@ import { computed } from "vue";
 
 const userStore = useUserStore();
 const isAuthenticated = computed(() => userStore.user.isAuthenticated);
+const isSuperUser = computed(() => userStore.user.is_superuser);
 
 const logout = () => {
   userStore.LOGOUT();

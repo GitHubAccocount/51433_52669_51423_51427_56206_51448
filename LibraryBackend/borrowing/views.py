@@ -4,6 +4,8 @@ from .models import Borrowing, Book
 from .serializers import BorrowingSerializer
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 
 class BorrowingViewSet(viewsets.ModelViewSet):
     queryset = Borrowing.objects.all()
@@ -32,5 +34,12 @@ class BorrowingViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         borrowed_books = Borrowing.objects.all()
-        serializer = self.get_serializer(borrowed_books, many=True)  
+        serializer = self.get_serializer(borrowed_books, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def my_borrowings(self, request):
+        user = request.user
+        borrowings = Borrowing.objects.filter(user=user)
+        serializer = self.get_serializer(borrowings, many=True)
         return Response(serializer.data)

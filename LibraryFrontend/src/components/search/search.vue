@@ -12,7 +12,7 @@
       <div
         v-for="book in filteredBooks"
         :key="book.id"
-        class="grid grid-cols-10 gap-4 border-b border-b-slate-400 mb-5"
+        class="grid grid-cols-10 gap-4 border-b border-b-slate-400 mb-5 cursor-pointer"
         @click="goToBookDetails(book.id)"
       >
         <div class="col-span-2">

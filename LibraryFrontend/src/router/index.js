@@ -71,17 +71,30 @@ const router = createRouter({
       name: "reservationList",
       component: () => import("../views/ReservationListView.vue"),
     },
+    {
+      path: "/my-borrowings",
+      name: "my-borrowings",
+      component: () => import("../views/MyBorrowings.vue"),
+    },
   ],
 });
 
 router.beforeEach((to, from) => {
   const userStore = useUserStore();
   const isAuthenticated = computed(() => userStore.user.isAuthenticated);
+  const isSuperUser = computed(() => userStore.user.is_superuser);
   if (!isAuthenticated.value && to.name !== "login" && to.name !== "register") {
     // redirect the user to the login page
     return { name: "login" };
   }
   if (isAuthenticated.value && (to.name == "login" || to.name == "register")) {
+    return { name: "home" };
+  }
+  if (
+    isAuthenticated.value &&
+    isSuperUser.value === false &&
+    (to.name == "admin" || to.name == "register")
+  ) {
     return { name: "home" };
   }
 });

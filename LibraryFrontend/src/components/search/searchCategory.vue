@@ -10,8 +10,8 @@
                 id="chemistry"
                 type="checkbox"
                 value="chemia"
-                v-model="selectedCategories"
-                @change="console.log(selectedCategories)"
+                v-model="bookStore.selectedCategories"
+                @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
               />
               <label for="chemistry" class="text-sm">chemia</label>
@@ -21,8 +21,8 @@
                 id="physics"
                 type="checkbox"
                 value="fizyka"
-                v-model="selectedCategories"
-                @change="console.log(selectedCategories)"
+                v-model="bookStore.selectedCategories"
+                @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
               />
               <label for="physics" class="text-sm">fizyka</label>
@@ -32,8 +32,8 @@
                 id="mathematics"
                 type="checkbox"
                 value="matematyka"
-                v-model="selectedCategories"
-                @change="console.log(selectedCategories)"
+                v-model="bookStore.selectedCategories"
+                @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
               />
               <label for="mathematics" class="text-sm">matematyka</label>
@@ -43,8 +43,8 @@
                 id="geology"
                 type="checkbox"
                 value="geologia"
-                v-model="selectedCategories"
-                @change="console.log(selectedCategories)"
+                v-model="bookStore.selectedCategories"
+                @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
               />
               <label for="geology" class="text-sm">geologia</label>
@@ -63,8 +63,8 @@
                 id="marketing"
                 type="checkbox"
                 value="marketing"
-                v-model="selectedCategories"
-                @change="console.log(selectedCategories)"
+                v-model="bookStore.selectedCategories"
+                @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
               />
               <label for="marketing" class="text-sm">marketing</label>
@@ -74,8 +74,8 @@
                 id="finance"
                 type="checkbox"
                 value="finanse"
-                v-model="selectedCategories"
-                @change="console.log(selectedCategories)"
+                v-model="bookStore.selectedCategories"
+                @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
               />
               <label for="finance" class="text-sm">finanse</label>
@@ -85,8 +85,8 @@
                 id="social_media"
                 type="checkbox"
                 value="social media"
-                v-model="selectedCategories"
-                @change="console.log(selectedCategories)"
+                v-model="bookStore.selectedCategories"
+                @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
               />
               <label for="social_media" class="text-sm">social media</label>
@@ -96,8 +96,8 @@
                 id="sales"
                 type="checkbox"
                 value="sprzedaż"
-                v-model="selectedCategories"
-                @change="console.log(selectedCategories)"
+                v-model="bookStore.selectedCategories"
+                @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
               />
               <label for="sales" class="text-sm">sprzedaż</label>

@@ -1,13 +1,19 @@
 from rest_framework import serializers
-from .models import Borrowing, User, Book
+from .models import Borrowing
+from account.models import User
+from book.models import Book
+from account.serializer import UserSerializer
+from book.serializers import BookSerializer
 
 class BorrowingSerializer(serializers.ModelSerializer):
-    user_email = serializers.EmailField(write_only=True)  # Accept email for user lookup
-    book_id = serializers.UUIDField(write_only=True)      # Accept ID for book lookup
+    user = UserSerializer(read_only=True)
+    book = BookSerializer(read_only=True)
+    user_email = serializers.EmailField(write_only=True)
+    book_id = serializers.UUIDField(write_only=True)
 
     class Meta:
         model = Borrowing
-        fields = '__all__'  # Include return_date
+        fields = ('id', 'borrowed_at', 'return_date', 'user', 'book', 'user_email', 'book_id')
 
     def validate(self, data):
         # Check if user exists by email

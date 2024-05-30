@@ -54,8 +54,6 @@ export const useBookStore = defineStore("book", () => {
     book,
     books,
     selectedCategories,
-    success_message,
-    BORROW_BOOK,
     GET_BOOKS,
     FETCH_BOOK_BY_ID,
     FILTERED_BOOKS,
