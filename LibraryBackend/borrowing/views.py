@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from .permissions import IsSuperUser
 
 class BorrowingViewSet(viewsets.ModelViewSet):
     queryset = Borrowing.objects.all()
@@ -13,12 +14,14 @@ class BorrowingViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'delete']
 
     def perform_create(self, serializer):
+        self.check_permissions(self.request)
         borrowing = serializer.save()
         # Decrement book availability
         book = borrowing.book
         book.available -= 1
         book.save()
     def perform_destroy(self, instance):  # Returning a book
+            self.check_permissions(self.request)
             borrowing = instance  # The borrowing record to be deleted
             book = borrowing.book
             if book:
@@ -33,6 +36,7 @@ class BorrowingViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def list(self, request):
+        self.check_permissions(self.request)
         borrowed_books = Borrowing.objects.all()
         serializer = self.get_serializer(borrowed_books, many=True)
         return Response(serializer.data)
@@ -43,3 +47,10 @@ class BorrowingViewSet(viewsets.ModelViewSet):
         borrowings = Borrowing.objects.filter(user=user)
         serializer = self.get_serializer(borrowings, many=True)
         return Response(serializer.data)
+    
+    def get_permissions(self):
+        if self.action in ['perform_create', 'perform_destroy', 'list']:
+            self.permission_classes = [IsSuperUser]
+        else:
+            self.permission_classes = [IsAuthenticated]
+        return super().get_permissions()
