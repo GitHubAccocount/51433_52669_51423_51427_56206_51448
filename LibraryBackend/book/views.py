@@ -8,8 +8,6 @@ from.models import Book
 from.serializers import BookSerializer
 
 @api_view(['GET'])
-@authentication_classes([])
-@permission_classes([])
 def book_detail_or_list(request, pk=None):  # Add pk parameter
     if pk:
         book = get_object_or_404(Book, pk=pk)
