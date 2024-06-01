@@ -8,6 +8,7 @@
         type="text"
         id="search"
         placeholder="Wpisz tytuł lub autora"
+        @input="onInput"
       />
 
       <button>
@@ -32,4 +33,15 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const searchQuery = ref("");
+
+const onInput = (event) => {
+  searchQuery.value = event.target.value;
+  emit("update-search", searchQuery.value);
+};
+
+const emit = defineEmits(["update-search"]);
+</script>
