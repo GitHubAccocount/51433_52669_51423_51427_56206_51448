@@ -15,13 +15,6 @@
         >
           <li>
             <router-link
-              to="/user"
-              class="block py-2 px-3 hover:text-teal-300 text-white"
-              >Użytkownik</router-link
-            >
-          </li>
-          <li>
-            <router-link
               to="/my-borrowings"
               class="block py-2 px-3 hover:text-teal-300 text-white"
               >Moje wypożyczenia</router-link
@@ -32,13 +25,6 @@
               to="/admin"
               class="block py-2 px-3 hover:text-teal-300 text-white"
               >Wypożyczenia</router-link
-            >
-          </li>
-          <li>
-            <router-link
-              to="/bookAdd"
-              class="block py-2 px-3 hover:text-teal-300 text-white"
-              >Add TEST</router-link
             >
           </li>
           <li>

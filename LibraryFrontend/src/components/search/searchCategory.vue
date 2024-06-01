@@ -9,7 +9,7 @@
               <input
                 id="chemistry"
                 type="checkbox"
-                value="chemia"
+                value="chemistry"
                 v-model="bookStore.selectedCategories"
                 @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
@@ -20,7 +20,7 @@
               <input
                 id="physics"
                 type="checkbox"
-                value="fizyka"
+                value="physics"
                 v-model="bookStore.selectedCategories"
                 @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
@@ -31,7 +31,7 @@
               <input
                 id="mathematics"
                 type="checkbox"
-                value="matematyka"
+                value="mathematics"
                 v-model="bookStore.selectedCategories"
                 @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
@@ -42,7 +42,7 @@
               <input
                 id="geology"
                 type="checkbox"
-                value="geologia"
+                value="geology"
                 v-model="bookStore.selectedCategories"
                 @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
@@ -73,7 +73,7 @@
               <input
                 id="finance"
                 type="checkbox"
-                value="finanse"
+                value="finance"
                 v-model="bookStore.selectedCategories"
                 @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
@@ -95,7 +95,7 @@
               <input
                 id="sales"
                 type="checkbox"
-                value="sprzedaż"
+                value="sales"
                 v-model="bookStore.selectedCategories"
                 @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
@@ -126,7 +126,7 @@
               <input
                 id="crime"
                 type="checkbox"
-                value="kryminał"
+                value="crime"
                 v-model="bookStore.selectedCategories"
                 @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"
@@ -148,7 +148,7 @@
               <input
                 id="romance"
                 type="checkbox"
-                value="romantyczne"
+                value="romance"
                 v-model="bookStore.selectedCategories"
                 @change="bookStore.FILTERED_BOOKS()"
                 class="mr-3"

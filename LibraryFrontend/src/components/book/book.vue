@@ -10,7 +10,7 @@
         <p>Year Published: {{ book.year_published }}</p>
         <p>{{ book.description }}</p>
         <p>Availability: {{ book.available }} / {{ book.total_stock }}</p>
-        <div v-if="user.is_superuser === true">
+        <div v-if="user.is_superuser === 'true'">
           <div class="button-container">
             <button class="edit-button" @click="showUsersList">
               Wybierz wypożyczającego użytkownika:
