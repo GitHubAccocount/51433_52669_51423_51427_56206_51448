@@ -8,3 +8,4 @@ class WebsiteUser(HttpUser):
   def get_books(self):
     self.client.get(url='api/books') 
 
+
