@@ -6,4 +6,4 @@ class WebsiteUser(HttpUser):
 
   @task
   def get_books(self):
-    self.client.get(url='api/books')
+    self.client.get(url='api/books') 
